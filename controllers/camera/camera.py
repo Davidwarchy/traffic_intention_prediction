@@ -4,16 +4,16 @@ from controller import Robot
 from ultralytics import YOLO
 import os
 import json
-import torch 
+import torch
 
 class TrafficLightDetector:
-    def __init__(self, output_dir="output", model_name="yolov8n.pt"):
+    def __init__(self, output_dir="output", model_name="yolov8n.pt", detection_interval=1.0):
         """Initialize the traffic light object detector with YOLOv8 and Webots camera."""
         # Initialize Webots robot and camera
         self.robot = Robot()
-        self.timestep = int(self.robot.getBasicTimeStep())
+        self.timestep = int(self.robot.getBasicTimeStep()) / 1000.0  # Convert to seconds
         self.camera = self.robot.getDevice("camera")
-        self.camera.enable(self.timestep)
+        self.camera.enable(int(self.timestep * 1000))  # Convert back to milliseconds
         self.image_size = (self.camera.getWidth(), self.camera.getHeight())  # (512, 512)
 
         # Device setup
@@ -33,25 +33,35 @@ class TrafficLightDetector:
         self.objects_log_file = os.path.join(self.output_dir, "objects_log.json")
         self.objects_log = []
 
+        # Detection interval setup (in seconds)
+        self.detection_interval = detection_interval  # Time between detections
+        self.last_detection_time = 0.0  # Track last detection time
+
     def run(self):
-        """Main loop to capture images, detect objects, and display results."""
-        while self.robot.step(self.timestep) != -1:
+        """Main loop to capture images, detect objects occasionally, and display results."""
+        while self.robot.step(int(self.timestep * 1000)) != -1:
             # Capture image from Webots camera
             img = self.camera.getImage()
             img_data = np.frombuffer(img, np.uint8).reshape((self.camera.getHeight(), self.camera.getWidth(), 4))
             rgb_image = cv2.cvtColor(img_data, cv2.COLOR_BGRA2BGR)
 
-            # Process image with YOLOv8
-            detected_objects = self.process_image(rgb_image)
+            # Get current simulation time
+            current_time = self.robot.getTime()
 
-            # Draw bounding boxes and labels on the image
-            annotated_image = self.draw_detections(rgb_image, detected_objects)
+            # Perform detection only if the interval has passed
+            detected_objects = []
+            if current_time - self.last_detection_time >= self.detection_interval:
+                detected_objects = self.process_image(rgb_image)
+                self.last_detection_time = current_time  # Update last detection time
+
+            # Draw bounding boxes and labels on the image (using last detected objects if no new detection)
+            annotated_image = self.draw_detections(rgb_image, detected_objects if detected_objects else self.objects_log[-len(detected_objects):] if self.objects_log else [])
 
             # Display the annotated image
             cv2.imshow("Object Detection", annotated_image)
             cv2.waitKey(1)  # Update the display
 
-            # Save detected objects to log
+            # Save detected objects to log if any were detected
             if detected_objects:
                 self.objects_log.extend(detected_objects)
                 self.save_log()
@@ -132,7 +142,8 @@ class TrafficLightDetector:
 
 def main():
     """Initialize and run the traffic light detector."""
-    detector = TrafficLightDetector()
+    # Set detection to occur every 1 second (adjustable)
+    detector = TrafficLightDetector(detection_interval=1.0)
     try:
         detector.run()
     finally:
