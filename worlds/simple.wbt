@@ -1,0 +1,52 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Parquetry.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.24414012190061748 -0.786074374358411 0.5678755839577755 5.282248859639118
+  position -4.06397134680341 2.0751846926325825 6.07469311529438
+  follow "robot"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  castShadows FALSE
+}
+RectangleArena {
+  floorSize 2.5 2.5
+  floorAppearance Parquetry {
+    type "dark strip"
+  }
+}
+Robot {
+  children [
+    DEF post Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        roughness 1
+        metalness 0
+      }
+      geometry Cylinder {
+        height 1.0
+        radius 0.05
+      }
+    }
+    Camera {
+      translation 0 0 1.05
+      width 512
+      height 512
+    }
+  ]
+  boundingObject USE post
+  physics Physics {
+    density -1
+    mass 1
+  }
+  name "stationary_post"
+  controller "camera"
+}
