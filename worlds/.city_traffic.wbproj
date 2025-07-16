@@ -10,4 +10,4 @@ textFiles: -1
 consoles: Console:All:All
 renderingDevicePerspectives: stationary_post:camera;1;0.839844;0;0
 renderingDevicePerspectives: vehicle:camera;1;1;0;0
-renderingDevicePerspectives: vehicle:display;1;1;0;0.464789
+renderingDevicePerspectives: vehicle:display;0;1;0;0.670029
