@@ -3,3 +3,5 @@ controllers/camera/images/
 controllers/camera/yolov8n.pt.0dc0ed66fb83492198d9dda6fd144977.partial
 images/
 controllers/camera/output/objects_log.json
+controllers/camera/real_traffic.mp4
+yolov8n.pt
