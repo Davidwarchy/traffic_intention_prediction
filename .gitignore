@@ -5,3 +5,4 @@ images/
 controllers/camera/output/objects_log.json
 controllers/camera/real_traffic.mp4
 yolov8n.pt
+output/objects_log.json
