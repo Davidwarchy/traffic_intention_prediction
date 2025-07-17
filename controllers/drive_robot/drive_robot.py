@@ -24,8 +24,6 @@ if __name__ == "__main__":
     
     camera_0.enable(timestep)
     camera_1.enable(timestep)
-
-    robot.step(timestep)
     
         # Main loop:
     # - perform simulation steps until Webots is stopping the controller
