@@ -123,8 +123,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.4669581997506108 -0.751223608975171 -0.4664902239104139 4.429958568101252
-  position 0.18510587779136856 51.27508872633397 10.180436097707956
+  orientation 0.5424258805937044 -0.600840029391209 -0.5871672871876593 4.295560220462046
+  position -69.24396206717475 34.70356641909491 195.0871444892203
   near 1
   follow "vehicle"
   followType "None"
@@ -356,6 +356,48 @@ CurvedRoadSegment {
 StraightRoadSegment {
   translation -25.5 45 0.02
   name "road(7)"
+  id "7"
+  startJunction "26"
+  endJunction "44"
+  width 21.5
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 0.85 0.75 0.3
+      type "double"
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  length 30
+}
+StraightRoadSegment {
+  translation -98 45 0.02
+  name "road(2)"
+  id "7"
+  startJunction "26"
+  endJunction "44"
+  width 21.5
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 0.85 0.75 0.3
+      type "double"
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  length 30
+}
+StraightRoadSegment {
+  translation -128 45 0.02
+  name "road(2)"
   id "7"
   startJunction "26"
   endJunction "44"
@@ -806,6 +848,28 @@ StraightRoadSegment {
   leftBorder FALSE
   length 69
 }
+StraightRoadSegment {
+  translation -45 64.5 0.02
+  rotation 0 0 1 1.5708
+  name "road(2)"
+  id "24"
+  startJunction "26"
+  endJunction "31"
+  width 21.5
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 0.85 0.75 0.3
+      type "double"
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  length 69
+}
 DEF WEBOTS_VEHICLE0 BmwX5 {
   translation -101.37400518968356 20.971693505018315 0.31716112733971785
   rotation -0.001534853823733564 0.006966062298088299 0.9999745587762715 -1.9306515514855933
@@ -890,36 +954,43 @@ DEF WEBOTS_VEHICLE0 BmwX5 {
   ]
 }
 CitroenCZero {
-  translation 0 45.69 0.4
+  translation -2.2 43.05 0.4
+  rotation 0 0 1 3.141592653589793
   name "vehicle(2)"
   controller "autonomous_vehicle_py_simple"
 }
 Bus {
-  translation 0 43 0.55
+  translation -5.58422e-16 38.44 0.55
+  rotation 0 0 1 3.141592653589793
   name "vehicle(3)"
   controller "autonomous_vehicle_py_simple"
 }
 LincolnMKZ {
-  translation 7 54 0.4
+  translation -23.24 38.5 0.4
+  rotation 0 0 1 3.141592653589793
   name "vehicle(4)"
   controller "autonomous_vehicle_py_simple"
 }
 MercedesBenzSprinter {
-  translation 7 50 0.4445
+  translation 7 43.44 0.4445
+  rotation 0 0 1 3.141592653589793
   controller "autonomous_vehicle_py_simple"
 }
 RangeRoverSportSVR {
-  translation 0 54 0.5
+  translation -21.15 42.01 0.5
+  rotation 0 0 1 3.141592653589793
   name "vehicle(5)"
   controller "autonomous_vehicle_py_simple"
 }
 RangeRoverSportSVR {
-  translation 0 51 0.5
+  translation -12.85 38.98 0.5
+  rotation 0 0 1 3.141592653589793
   name "vehicle(6)"
   controller "autonomous_vehicle_py_simple"
 }
 ToyotaPrius {
-  translation 0 48 0.3
+  translation -10.5 42.15 0.3
+  rotation 0 0 1 3.141592653589793
   name "vehicle(7)"
   controller "autonomous_vehicle_py_simple"
 }
