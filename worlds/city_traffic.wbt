@@ -7,8 +7,6 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/StraightRoadSegment.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/RoadIntersection.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/bmw/BmwX5.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/GenericTrafficLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/CrossRoadsTrafficLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/BuildingUnderConstruction.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/CommercialBuilding.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/UBuilding.proto"
@@ -51,6 +49,12 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/ScooterDriver.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/MotorbikeSimple.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/MotorbikeDriver.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/citroen/CitroenCZero.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/Bus.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/lincoln/LincolnMKZ.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/mercedes_benz/MercedesBenzSprinter.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/range_rover/RangeRoverSportSVR.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/toyota/ToyotaPrius.proto"
 
 WorldInfo {
   ERP 0.6
@@ -166,113 +170,6 @@ DEF GROUND_SHAPE Solid {
   name "solid(1)"
   boundingObject USE GROUND_PLANE
   locked TRUE
-}
-Robot {
-  translation -47.4 46.1 0.07
-  children [
-    DEF body Pose {
-      translation 0 0 0.0415
-      children [
-        Shape {
-          appearance PBRAppearance {
-            baseColor 0 0 1
-            roughness 1
-            metalness 0
-          }
-          geometry Cylinder {
-            height 0.08
-            radius 0.045
-          }
-        }
-      ]
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        anchor 0.045 0 0.025
-      }
-      device [
-        RotationalMotor {
-          name "motor_1"
-        }
-      ]
-      endPoint Solid {
-        translation 0.045012051601506266 4.395648636611483e-08 0.025024496356262842
-        rotation 1.568869610168361e-08 0.9999999999999999 1.5624151513633414e-08 1.5700000361761743
-        children [
-          DEF wheel Shape {
-            appearance PBRAppearance {
-              baseColor 1 0 0
-              roughness 1
-              metalness 0
-            }
-            geometry Cylinder {
-              height 0.01
-              radius 0.025
-            }
-          }
-        ]
-        boundingObject USE wheel
-        physics DEF wheel_physics Physics {
-        }
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        anchor -0.045 0 0.025
-      }
-      device [
-        RotationalMotor {
-          name "motor_2"
-        }
-      ]
-      endPoint Solid {
-        translation -0.045 0 0.025
-        rotation 0 1 0 1.57
-        children [
-          USE wheel
-        ]
-        name "solid(1)"
-        boundingObject USE wheel
-        physics USE wheel_physics
-      }
-    }
-    Solid {
-      translation 0.015 0.045 0.07
-      children [
-        DEF eye Shape {
-          appearance PBRAppearance {
-            baseColor 1 0 0
-            roughness 1
-          }
-          geometry Box {
-            size 0.005 0.005 0.005
-          }
-        }
-      ]
-      name "solid(2)"
-    }
-    Solid {
-      translation -0.015 0.045 0.07
-      children [
-        USE eye
-      ]
-      name "solid(3)"
-    }
-    Camera {
-      translation -0.04 0.045032 0.08
-      rotation 0 0 1 2.0936
-      name "camera_0"
-    }
-    Camera {
-      translation 0.0500318 -0.0050398 0.08
-      rotation 0 0 -1 -1.3082053071795858
-      name "camera_1"
-    }
-  ]
-  boundingObject USE body
-  physics Physics {
-  }
-  controller "drive_robot"
 }
 CurvedRoadSegment {
   translation -64.5 4.5 0.02
@@ -912,6 +809,48 @@ StraightRoadSegment {
 DEF WEBOTS_VEHICLE0 BmwX5 {
   translation -101.37400518968356 20.971693505018315 0.31716112733971785
   rotation -0.001534853823733564 0.006966062298088299 0.9999745587762715 -1.9306515514855933
+  controller "autonomous_vehicle_py"
+  sensorsSlotTop [
+    Camera {
+      translation 0.72 0 -0.05
+      children [
+        Pose {
+          translation -0.05 0 0
+          rotation 0 -1 0 1.5708
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.8 0.8 0.8
+                roughness 1
+                metalness 0
+              }
+              geometry Cylinder {
+                height 0.1
+                radius 0.04
+              }
+            }
+          ]
+        }
+      ]
+      fieldOfView 1
+      width 128
+    }
+  ]
+  sensorsSlotCenter [
+    GPS {
+    }
+    Gyro {
+    }
+    Display {
+      width 200
+      height 150
+    }
+  ]
+}
+DEF WEBOTS_VEHICLE0 BmwX5 {
+  translation -96.6129 31.0841 1.26881
+  rotation -0.001534853823733564 0.006966062298088299 0.9999745587762715 -1.9306515514855933
+  name "vehicle(1)"
   controller "autonomous_vehicle"
   sensorsSlotTop [
     Camera {
@@ -950,15 +889,39 @@ DEF WEBOTS_VEHICLE0 BmwX5 {
     }
   ]
 }
-GenericTrafficLight {
-  translation -34.665 55.2732 0
-  startGreen FALSE
-  greenTime 10
-  redTime 10
-  state "red"
+CitroenCZero {
+  translation 0 45.69 0.4
+  name "vehicle(2)"
+  controller "autonomous_vehicle_py_simple"
 }
-CrossRoadsTrafficLight {
-  translation 45 -45 0
+Bus {
+  translation 0 43 0.55
+  name "vehicle(3)"
+  controller "autonomous_vehicle_py_simple"
+}
+LincolnMKZ {
+  translation 7 54 0.4
+  name "vehicle(4)"
+  controller "autonomous_vehicle_py_simple"
+}
+MercedesBenzSprinter {
+  translation 7 50 0.4445
+  controller "autonomous_vehicle_py_simple"
+}
+RangeRoverSportSVR {
+  translation 0 54 0.5
+  name "vehicle(5)"
+  controller "autonomous_vehicle_py_simple"
+}
+RangeRoverSportSVR {
+  translation 0 51 0.5
+  name "vehicle(6)"
+  controller "autonomous_vehicle_py_simple"
+}
+ToyotaPrius {
+  translation 0 48 0.3
+  name "vehicle(7)"
+  controller "autonomous_vehicle_py_simple"
 }
 DEF STONES Solid {
   translation 5.03891 -136.158 -4.23581
